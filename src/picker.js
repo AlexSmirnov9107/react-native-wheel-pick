@@ -1,7 +1,13 @@
-import React, { Component } from 'react';
-import { ColorPropType, StyleSheet, View, ViewPropTypes as RNViewPropTypes, Text } from 'react-native';
-import PropTypes from 'prop-types';
-import WheelCurvedPicker from './WheelCurvedPicker';
+import React, { Component } from "react";
+import {
+  ColorPropType,
+  StyleSheet,
+  View,
+  ViewPropTypes as RNViewPropTypes,
+  Text,
+} from "react-native";
+import PropTypes from "prop-types";
+import WheelCurvedPicker from "./WheelCurvedPicker";
 
 const ViewPropTypes = RNViewPropTypes || View.propTypes;
 
@@ -9,11 +15,10 @@ const PickerItem = WheelCurvedPicker.Item;
 
 const styles = StyleSheet.create({
   picker: {
-    backgroundColor: '#d3d3d3',
+    backgroundColor: "#d3d3d3",
     height: 220,
   },
 });
-
 
 export default class Picker extends Component {
   static propTypes = {
@@ -25,10 +30,11 @@ export default class Picker extends Component {
     pickerData: PropTypes.array.isRequired,
     style: ViewPropTypes.style,
     selectedValue: PropTypes.any,
+    selectedIndex: PropTypes.number,
   };
 
   static defaultProps = {
-    textColor: '#333',
+    textColor: "#333",
     textSize: 26,
     itemSpace: 20,
     itemStyle: null,
@@ -39,9 +45,9 @@ export default class Picker extends Component {
     selectedValue: this.props.selectedValue,
   };
 
-  handleChange = (selectedValue) => {
-    this.setState({ selectedValue });
-    this.props.onValueChange(selectedValue);
+  handleChange = (selectedValue, selectedIndex) => {
+    this.setState({ selectedValue, selectedIndex });
+    this.props.onValueChange(selectedValue, selectedIndex);
   };
 
   render() {
@@ -57,8 +63,10 @@ export default class Picker extends Component {
         {pickerData.map((data, index) => (
           <PickerItem
             key={index}
-            value={typeof data.value !== 'undefined' ? data.value : data}
-            label={typeof data.label !== 'undefined' ? data.label : data.toString()}
+            value={typeof data.value !== "undefined" ? data.value : data}
+            label={
+              typeof data.label !== "undefined" ? data.label : data.toString()
+            }
           />
         ))}
       </WheelCurvedPicker>

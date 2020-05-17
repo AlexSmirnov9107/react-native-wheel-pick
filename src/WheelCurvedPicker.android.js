@@ -1,9 +1,14 @@
-import React, { PureComponent } from 'react';
-import { ColorPropType, requireNativeComponent, View, ViewPropTypes as RNViewPropTypes } from 'react-native';
-import PropTypes from 'prop-types';
+import React, { PureComponent } from "react";
+import {
+  ColorPropType,
+  requireNativeComponent,
+  View,
+  ViewPropTypes as RNViewPropTypes,
+} from "react-native";
+import PropTypes from "prop-types";
 
 const ViewPropTypes = RNViewPropTypes || View.propTypes;
-let firstTimeOnChange = true
+let firstTimeOnChange = true;
 
 const stateFromProps = (props) => {
   let selectedIndex = 0;
@@ -34,24 +39,24 @@ class WheelCurvedPicker extends PureComponent {
   static defaultProps = {
     textSize: 26,
     itemSpace: 20,
-    textColor: '#333',
+    textColor: "#333",
   };
 
-  state = {}
+  state = {};
 
-  onValueChange = ({ nativeEvent: { data } }) => {
-    if(firstTimeOnChange) {
-      return firstTimeOnChange = false
+  onValueChange = ({ nativeEvent: { data, position } }) => {
+    if (firstTimeOnChange) {
+      return (firstTimeOnChange = false);
     }
-    this.props.onValueChange(data); 
-  }
+    this.props.onValueChange(data, position);
+  };
 
   componentDidMount() {
     this.setState(stateFromProps(this.props));
   }
 
   static getDerivedStateFromProps(nextProps) {
-    return stateFromProps(nextProps)
+    return stateFromProps(nextProps);
   }
 
   render() {
@@ -80,6 +85,9 @@ class Item extends PureComponent {
 
 WheelCurvedPicker.Item = Item;
 
-const WheelCurvedPickerNative = requireNativeComponent('WheelCurvedPicker', WheelCurvedPicker);
+const WheelCurvedPickerNative = requireNativeComponent(
+  "WheelCurvedPicker",
+  WheelCurvedPicker
+);
 
 export default WheelCurvedPicker;
