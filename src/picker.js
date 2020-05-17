@@ -57,7 +57,7 @@ export default class Picker extends Component {
       <WheelCurvedPicker
         {...props}
         style={[styles.picker, style]}
-        selectedValue={this.state.selectedValue}
+        selectedValue={this.props.selectedValue}
         onValueChange={this.handleChange}
       >
         {pickerData.map((data, index) => (
